@@ -3,6 +3,7 @@ import { Col, Form, Row, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import { callCreatePermission, callUpdatePermission } from "@/config/api";
 import { IPermission } from "@/types/backend";
+import { useEffect } from "react";
 
 interface IProps {
     openModal: boolean;
@@ -18,6 +19,11 @@ const ModalPermission = (props: IProps) => {
     const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        if (dataInit?.id) {
+            form.setFieldsValue(dataInit)
+        }
+    }, [dataInit])
 
     const submitPermission = async (valuesForm: any) => {
         const { name, apiPath, method, module } = valuesForm;
