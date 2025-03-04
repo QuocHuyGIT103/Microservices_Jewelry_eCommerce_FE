@@ -1,9 +1,7 @@
 import { Modal, Table, Tabs } from "antd";
 import { isMobile } from "react-device-detect";
 import type { TabsProps } from 'antd';
-import { IResume } from "@/types/backend";
 import { useState, useEffect } from 'react';
-import { callFetchResumeByUser } from "@/config/api";
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 
@@ -13,79 +11,77 @@ interface IProps {
 }
 
 const UserResume = (props: any) => {
-    const [listCV, setListCV] = useState<IResume[]>([]);
+    // const [listCV, setListCV] = useState<IResume[]>([]);
     const [isFetching, setIsFetching] = useState<boolean>(false);
 
-    useEffect(() => {
-        const init = async () => {
-            setIsFetching(true);
-            const res = await callFetchResumeByUser();
-            if (res && res.data) {
-                setListCV(res.data.result as IResume[])
-            }
-            setIsFetching(false);
-        }
-        init();
-    }, [])
+    // useEffect(() => {
+    //     const init = async () => {
+    //         setIsFetching(true);
+    //         // const res = await callFetchResumeByUser();
+    //         if (res && res.data) {
+    //             setListCV(res.data.result as IResume[])
+    //         }
+    //         setIsFetching(false);
+    //     }
+    //     init();
+    // }, [])
 
-    const columns: ColumnsType<IResume> = [
-        {
-            title: 'STT',
-            key: 'index',
-            width: 50,
-            align: "center",
-            render: (text, record, index) => {
-                return (
-                    <>
-                        {(index + 1)}
-                    </>)
-            }
-        },
-        {
-            title: 'Công Ty',
-            dataIndex: "companyName",
+    const columns: ColumnsType = [
+        // {
+        //     title: 'STT',
+        //     key: 'index',
+        //     width: 50,
+        //     align: "center",
+        //     render: (text, record, index) => {
+        //         return (
+        //             <>
+        //                 {(index + 1)}
+        //             </>)
+        //     }
+        // },
+        // {
+        //     title: 'Công Ty',
+        //     dataIndex: "companyName",
 
-        },
-        {
-            title: 'Job title',
-            dataIndex: ["job", "name"],
+        // },
+        // {
+        //     title: 'Job title',
+        //     dataIndex: ["job", "name"],
 
-        },
-        {
-            title: 'Trạng thái',
-            dataIndex: "status",
-        },
-        {
-            title: 'Ngày rải CV',
-            dataIndex: "createdAt",
-            render(value, record, index) {
-                return (
-                    <>{dayjs(record.createdAt).format('DD-MM-YYYY HH:mm:ss')}</>
-                )
-            },
-        },
-        {
-            title: '',
-            dataIndex: "",
-            render(value, record, index) {
-                return (
-                    <a
-                        href={`${import.meta.env.VITE_BACKEND_URL}/storage/resume/${record?.url}`}
-                        target="_blank"
-                    >Chi tiết</a>
-                )
-            },
-        },
+        // },
+        // {
+        //     title: 'Trạng thái',
+        //     dataIndex: "status",
+        // },
+        // {
+        //     title: 'Ngày rải CV',
+        //     dataIndex: "createdAt",
+        //     render(value, record, index) {
+                
+        //     },
+        // },
+        // {
+        //     title: '',
+        //     dataIndex: "",
+        //     render(value, record, index) {
+        //         return (
+        //             <a
+        //                 // href={`${import.meta.env.VITE_BACKEND_URL}/storage/resume/${record?.url}`}
+        //                 // target="_blank"
+        //             >Chi tiết</a>
+        //         )
+        //     },
+        // },
     ];
 
     return (
         <div>
-            <Table<IResume>
+            {/* <Table<IResume>
                 columns={columns}
                 dataSource={listCV}
                 loading={isFetching}
                 pagination={false}
-            />
+            /> */}
         </div>
     )
 }

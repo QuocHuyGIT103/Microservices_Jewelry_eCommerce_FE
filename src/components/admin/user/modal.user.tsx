@@ -2,7 +2,7 @@ import { ModalForm, ProForm, ProFormDigit, ProFormSelect, ProFormText } from "@a
 import { Col, Form, Row, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import { useState, useEffect } from "react";
-import { callCreateUser, callFetchCompany, callFetchRole, callUpdateUser } from "@/config/api";
+import { callCreateUser, callFetchRole, callUpdateUser } from "@/config/api";
 import { IUser } from "@/types/backend";
 import { DebounceSelect } from "./debouce.select";
 
@@ -122,19 +122,19 @@ const ModalUser = (props: IProps) => {
     }
 
     // Usage of DebounceSelect
-    async function fetchCompanyList(name: string): Promise<ICompanySelect[]> {
-        const res = await callFetchCompany(`page=1&size=100&name=/${name}/i`);
-        if (res && res.data) {
-            const list = res.data.result;
-            const temp = list.map(item => {
-                return {
-                    label: item.name as string,
-                    value: item.id as string
-                }
-            })
-            return temp;
-        } else return [];
-    }
+    // async function fetchCompanyList(name: string): Promise<ICompanySelect[]> {
+    //     const res = await callFetchCompany(`page=1&size=100&name=/${name}/i`);
+    //     if (res && res.data) {
+    //         const list = res.data.result;
+    //         const temp = list.map(item => {
+    //             return {
+    //                 label: item.name as string,
+    //                 value: item.id as string
+    //             }
+    //         })
+    //         return temp;
+    //     } else return [];
+    // }
 
     async function fetchRoleList(name: string): Promise<ICompanySelect[]> {
         const res = await callFetchRole(`page=1&size=100&name=/${name}/i`);
@@ -248,28 +248,6 @@ const ModalUser = (props: IProps) => {
                             />
                         </ProForm.Item>
 
-                    </Col>
-                    <Col lg={12} md={12} sm={24} xs={24}>
-                        <ProForm.Item
-                            name="company"
-                            label="Thuộc Công Ty"
-                            rules={[{ required: true, message: 'Vui lòng chọn company!' }]}
-                        >
-                            <DebounceSelect
-                                allowClear
-                                showSearch
-                                defaultValue={companies}
-                                value={companies}
-                                placeholder="Chọn công ty"
-                                fetchOptions={fetchCompanyList}
-                                onChange={(newValue: any) => {
-                                    if (newValue?.length === 0 || newValue?.length === 1) {
-                                        setCompanies(newValue as ICompanySelect[]);
-                                    }
-                                }}
-                                style={{ width: '100%' }}
-                            />
-                        </ProForm.Item>
                     </Col>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText
